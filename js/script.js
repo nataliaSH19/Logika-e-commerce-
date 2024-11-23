@@ -1,3 +1,24 @@
+//LESSON3:
+// Функція для отримання значення кукі за ім'ям
+function getCookieValue(cookieName) {
+  // Розділяємо всі куки на окремі частини
+  const cookies = document.cookie.split(";");
+
+  // Шукаємо куки з вказаним ім'ям
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim(); // Видаляємо зайві пробіли
+
+    // Перевіряємо, чи починається поточне кукі з шуканого імені
+    if (cookie.startsWith(cookieName + "=")) {
+      // Якщо так, повертаємо значення кукі
+      return cookie.substring(cookieName.length + 1); // +1 для пропуску символу "="
+    }
+  }
+  // Якщо кукі з вказаним іменем не знайдено, повертаємо порожній рядок або можна повернути null
+  return "";
+}
+//LESSON3
+
 async function getProducts() {
   // Виконуємо запит до файлу "store_db.json" та очікуємо на відповідь
   let response = await fetch("store_db.json");
@@ -23,6 +44,18 @@ function getCardHTML(product) {
           
       `;
 }
+
+//LESSON3: Функція для додавання товару до кошика при кліку на кнопку "Купити"
+function addToCart(event) {
+  // Отримуємо дані про товар з data-атрибута кнопки
+  const productData = event.target.getAttribute("data-product");
+  const product = JSON.parse(productData);
+  alert("Товар додано в кошик ");
+  console.log(product);
+  // Додаємо товар до кошика
+  cart.addItem(product);
+}
+//LESSON3:
 
 getProducts().then(function (products) {
   let productsList = document.querySelector(".products-list");
